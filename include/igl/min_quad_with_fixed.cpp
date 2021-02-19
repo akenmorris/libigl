@@ -68,14 +68,16 @@ IGL_INLINE bool igl::min_quad_with_fixed_precompute(
   data.known = known.template cast<int>();
 
   // get list of unknown indices
-  data.unknown.resize(n-kr);
   std::vector<bool> unknown_mask;
   unknown_mask.resize(n,true);
+  int krt = 0;
   for(int i = 0;i<kr;i++)
   {
+    if(unknown_mask[known(i, 0)]){krt++;}
     unknown_mask[known(i, 0)] = false;
   }
   int u = 0;
+  data.unknown.resize(n-krt);
   for(int i = 0;i<n;i++)
   {
     if(unknown_mask[i])
